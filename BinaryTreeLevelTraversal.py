@@ -4,42 +4,36 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class BinaryTreeLevelTraversal(object):
+class Solution(object):
 
     def levelOrder(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[int]]
-        """
-        self.list = []
-        self.index = int(0)
+        level=1
+        current=(root, level)
+        s=set()
+        result=[]
         if root is None:
-            return self.list
-        self.list.insert(self.index, [root.val])
-        self.index = self.index + 1
-        self.levelList = []
-        self.getLevel(root)
-        return self.list
-    
-    def getLevel(self, root):
-        empty = True
-        if root is None:
-            return
-        
-        if root.left is not None:
-            empty = False
-            self.levelList.append(root.left.val)
-        if root.right is not None:
-            empty = False
-            self.levelList.append(root.right.val)
-        
-        if not empty:
-            print "List adding: ", self.levelList
-            self.list.insert(self.index, self.levelList)
-            self.levelList = []
-            self.index = self.index + 1
-            self.getLevel(root.left)
-            self.getLevel(root.right)
-            return
-        else:
-            return
+            return result
+        Q = [current]
+        while Q:
+            current=Q.pop()
+            level=current[1]
+            if current[0] is not None:
+                if current[0] not in s:
+                    result.append([current[0].val, level])
+                    s.add(current[0])
+                if current[0].left:
+                    Q.insert(0,(current[0].left, level+1))
+                if current[0].right:
+                    Q.insert(0,(current[0].right, level+1))
+        output=[]
+        temp=[]
+        level=1
+        for val in result:
+            if val[1]==level:
+                temp.append(val[0])
+            elif val[1] > level:
+                output.append(temp)
+                temp=[val[0]]
+                level+=1
+        output.append(temp)
+        return output
