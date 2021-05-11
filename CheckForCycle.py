@@ -8,13 +8,14 @@ class Solution(object):
         if (head is None) or head.next is None:
             return False
         
-        # create set for seen nodes
-        nodes_seen = set()
+        slow = head
+        fast = head.next
         
-        while head is not None:
-            if head in nodes_seen: 
-                return True
-            nodes_seen.add(head)
-            head = head.next
+        while slow != fast:
+            if fast is None or fast.next is None:
+                # Reached the end without cycles
+                return False
+            slow = slow.next
+            fast = fast.next.next
         
-        return False
+        return True
