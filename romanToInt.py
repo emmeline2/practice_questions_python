@@ -36,7 +36,6 @@ class Solution(object):
                 sum = sum + value
             else:
                 sum = sum + value
-            print sum
             
             prev = value
         
