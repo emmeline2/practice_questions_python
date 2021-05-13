@@ -1,4 +1,12 @@
 class Solution(object):
+    roman_nums = {"I": 1, 
+                  "V": 5, 
+                  "X": 10,
+                  "L": 50,
+                  "C": 100, 
+                  "D": 500,
+                  "M": 1000}
+    
     def romanToInt(self, s):
         """
         :type s: str
@@ -11,24 +19,10 @@ class Solution(object):
         value = 0
         sum = 0
         prev = 20000 # greater than max val
+        
  
         for char in s:
-            if char == "I":
-                value = 1
-            elif char == "V":
-                value = 5
-            elif char == "X":
-                value = 10
-            elif char == "L":
-                value = 50
-            elif char == "C":
-                value = 100
-            elif char == "D":
-                value = 500
-            elif char == "M":
-                value = 1000
-            else:
-                print "Invalid value"
+            value = self.roman_nums.get(char)
             
             if value > prev:
                 # remove prev written value and next
@@ -38,6 +32,5 @@ class Solution(object):
                 sum = sum + value
             
             prev = value
-        
         
         return sum
