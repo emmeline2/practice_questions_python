@@ -4,17 +4,27 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: None Do not return anything, modify matrix in-place instead.
         """
-        
-        n = len(matrix[0])
-        
-        print "Range: ", range(n // 2 + n % 2)
-        
-        for i in range(n // 2 + n % 2):
-            # // = floor division: divide result is whole num rounded down
-            for j in range( n// 2): 
-                # swap index on four sides
-                temp = matrix[n -1 -j][i] 
-                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - j - 1]
-                matrix[n - 1 - i][n - j - 1] = matrix[j][n - 1 - i]
-                matrix[j][n - 1 - i] = matrix[i][j]
+        self.transpose(matrix)
+        self.reflect(matrix)
+    
+    def transpose(self, matrix):
+        # transpose the matrix, flip along the diagonal
+        n = len(matrix)
+        for i in range(n):
+            for j in range(i, n):
+                temp = matrix[j][i]
+                matrix[j][i] = matrix[i][j]
                 matrix[i][j] = temp
+
+    
+    def reflect(self, matrix):
+        # reverse order in row
+        n = len(matrix)
+        for i in range(n): 
+            # // = floor division: divide and round down to nearest whole num
+            for j in range(n // 2):
+                temp = matrix[i][j]
+                matrix[i][j] = matrix[i][-j-1]
+                matrix[i][-j -1] = matrix[i][j]
+                matrix[i][-j-1] = temp
+                
