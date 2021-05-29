@@ -4,17 +4,21 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-                
-        if len(nums) < 3:
-            return False
-        
-        # iterate for previous index to len
-        for i in range(0, len(nums)-2):
-            for j in range(i+1, len(nums)-1):
-                for k in range(j+1, len(nums)):
-                    if (nums[i] < nums[j] < nums[k]):
-                        return True
 
-        return False
-                
+        num_1,num_2 = 2**31-1,2**31-1
         
+        for num_3 in nums:
+            if num_3 < num_1:
+                # reset num_1 to new smallest
+                num_1 = num_3
+
+            elif num_1 < num_3 < num_2:
+                # reset num_2 to next smallest
+                num_2 = num_3
+
+            elif num_3 > num_2:
+                # in this case num1 < num2 < num3, return true
+                return True
+        
+        # if iterate whole list and don't find anything return false
+        return False
