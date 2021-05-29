@@ -1,39 +1,29 @@
-class Solution(object):
-    
-    def getLengthSubstring(self, substring):
-        if len(substring) is 0: 
-            return 0
-        if len(substring) is 1:
-            return 1
-        
-        map = {}
-        cmax = 0
-        count = 0
-        
-        for c in substring:
-            if c not in map:
-                count += 1
-                map[c] = 1
-            else:
-                cmax = max(cmax, count)
-                count = 0
-                map.clear()
-        
-        return cmax
-    
-    
+class Solution:
     def lengthOfLongestSubstring(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        max_count = 0;
-        for index in range(len(s)):
-            max_count = max(max_count, self.getLengthSubstring(s[index:]))
+        map = {}
+        left = right = 0
+        count = 0
+        max_count = 0
         
+        if s is None: 
+            return count
+        if len(s) is 1: 
+            return count + 1
+        
+        
+        while right < len(s):
+            r = s[right]
+            if r in map:
+                max_count = max(max_count, count)
+                right = left
+                left += 1
+                map.clear()
+                count = 0
+            else:
+                map[r] = 1
+                count += 1
+                right += 1
+        
+        # set max value, in case if is never reached
+        max_count = max(max_count, count)
         return max_count
-            
-    
-
-            
-            
