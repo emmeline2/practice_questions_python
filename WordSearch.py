@@ -6,33 +6,40 @@ class Solution(object):
         :rtype: bool
         """
         isFound = False
+        if not board:
+            return isFound
         
         # iterate the board
         for i in range(len(board)):
             for j in range(len(board[0])):
-                self.backtracking(board, word, i, j, 0, isFound)
+                isFound = self.backtracking(board, word, i, j)
                 if isFound == True: 
-                    break
+                    return isFound
         
         return isFound
     
     
-    def backtracking(self, board, word, i, j, index, isFound):
-        # direction
-        if index == len(word)-1:
-            isFound = True
-            return
-        if i > len(board) or j > len(board) or i < 0 or j < 0:
-            return
-    
-        if board[i][j] == word[index]:
-            board[i][j] = "0"
-            index = index + 1
+    def backtracking(self, board, word, i, j):
+        # found whole word
+        if len(word) == 0:
+            return True
         
+        if i >= len(board) or j >= len(board[0]) or i < 0 or j < 0 or word[0] != board[i][j]:
+            return False
         
-        self.backtracking(board, word, i+1, j, index, isFound) # to the right
-        self.backtracking(board, word, i-1, j, index, isFound) # to the left
-        self.backtracking(board, word, i, j+1, index, isFound) # go up
-        self.backtracking(board, word, i, j-1, index, isFound) # go down
-            
-        return isFound
+        # Save value at index
+        temp = board[i][j]
+        
+        # set value to visited
+        board[i][j] = "#"
+        
+        # check in four directions
+        right = self.backtracking(board, word[1:], i+1, j) # to the right
+        left = self.backtracking(board, word[1:], i-1, j) # to the left
+        up = self.backtracking(board, word[1:], i, j+1) # go up
+        down = self.backtracking(board, word[1:], i, j-1) # go down
+        
+        # reset value
+        board[i][j] = temp
+        
+        return (right or left or up or down)
