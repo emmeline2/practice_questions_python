@@ -6,30 +6,19 @@ class Solution(object):
         """
         if intervals is None or len(intervals)==0: 
             return []
-        
-        
-        current_min = intervals[0][0]
-        current_max = intervals[0][1]
-        
+
+        intervals.sort()
+
         retList = []
         
-        
         for interval in intervals:
-            min = interval[0]
-            max = interval[1]
+            if not retList or retList[-1][1] < interval[0]: 
+                retList.append(interval)
             
-            if min <= current_max and max >= current_max: 
-                current_max = interval[1]
-            
-            if min > current_max:
-                retList.append([current_min, current_max])
-                current_min = min
-                current_max = max
+            else:
+                retList[-1][1] = max(retList[-1][1], interval[1])
         
-        if retList[len(retList)-1][1] != max:
-            retList.append([current_min, current_max])
-        
-        
+
         return retList
             
                 
