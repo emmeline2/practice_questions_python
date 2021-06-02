@@ -16,6 +16,10 @@ class Solution(object):
                 retList[1] = index
             elif nums[index] == target: 
                 retList[1] = index
+            elif nums[index] > target:
+                # The array is sorted, so break out of for loop if above target
+                break 
+                
         
         
         return retList
