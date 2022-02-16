@@ -9,7 +9,14 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        if n == 1: 
+            return 1
+        if n == None: 
+            return None
+        
         for item in range(1, n): 
             if isBadVersion(item): 
                 return item
         
+        # catch the case of last item is bad
+        return n
