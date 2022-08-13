@@ -10,15 +10,11 @@ class Solution(object):
             return None
         elif len(nums) is 1: 
             return nums
-        
-        # create return list for running sums
-        ret_list = []
-        ret_list.append(nums[0])
 
-        # create running sums list
+        # Write over input array to save space
         # increment from 1 -> end, skipping 0 index
         for i in range(1,len(nums)):
-            sum = ret_list[i-1] + nums[i]
-            ret_list.append(sum)
+            sum = nums[i-1] + nums[i]
+            nums[i] = sum
         
-        return ret_list
+        return nums
