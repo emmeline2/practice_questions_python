@@ -5,33 +5,19 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        # occurances of letters
-        s_map = {}
-        for letter in s:
-            if letter not in s_map:
-                s_map[letter] = 1
-            else: 
-                s_map[letter] += 1
+        mapping_s_t = {}
+        mapping_t_s = {}
         
-        t_map = {}
-        for letter in t:
-            if letter not in t_map:
-                t_map[letter] = 1
-            else: 
-                t_map[letter] += 1
-        
-        # check if number of letters matches
-        if len(t_map) != len(s_map):
-            return False
-        
-        
-        # check if values of letter frequency matches
-        s_values = list(s_map.values())
-        t_values = list(t_map.values())
-        for value in s_values: 
-            if value in t_values:
-                t_values.remove(value)
-            else:
+        for c1, c2 in zip(s, t):
+            
+            # Case 1: No mapping exists in either of the dictionaries
+            if (c1 not in mapping_s_t) and (c2 not in mapping_t_s):
+                mapping_s_t[c1] = c2
+                mapping_t_s[c2] = c1
+            
+            # Case 2: Ether mapping doesn't exist in one of the dictionaries or Mapping exists and
+            # it doesn't match in either of the dictionaries or both            
+            elif mapping_s_t.get(c1) != c2 or mapping_t_s.get(c2) != c1:
                 return False
-                
+            
         return True
