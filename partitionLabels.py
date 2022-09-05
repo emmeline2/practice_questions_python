@@ -4,10 +4,6 @@ class Solution(object):
         :type s: str
         :rtype: List[int]
         """
-                
-        #last = {c: i for i, c in enumerate(s)}
-        
-        
         # create hash map of last seen occurance of each letter
         last_seen = {}
         for i in range(0, len(s)): 
@@ -16,11 +12,9 @@ class Solution(object):
             else: 
                 last_seen[s[i]] = i
                 
-
         end = 0
         start = 0
         ans = []
-        
         
         # loop the string, increasing the partition based on last seen
         # value for each character encountered
