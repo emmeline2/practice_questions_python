@@ -17,13 +17,19 @@ class Solution(object):
                 last_seen[s[i]] = i
                 
 
-        curr_max = 0
-        anchor = 0
+        end = 0
+        start = 0
         ans = []
-        for i, c in enumerate(s):
-            curr_max = max(curr_max, last_seen[c])
-            if i == curr_max:
-                ans.append(i - anchor + 1)
-                anchor = i + 1
+        
+        
+        # loop the string, increasing the partition based on last seen
+        # value for each character encountered
+        for i in range(0, len(s)):
+            end = max(end, last_seen[s[i]])
+            # break the partition when incrementing i reaches the max end value
+            if i == end:
+                # get length, +1 to convert from indexes
+                ans.append(i - start + 1)
+                start = i + 1
         
         return ans
