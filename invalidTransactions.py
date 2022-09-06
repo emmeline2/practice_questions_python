@@ -1,56 +1,37 @@
-class Solution(object):
-    def invalidTransactions(self, transactions):
-        """
-        :type transactions: List[str]
-        :rtype: List[str]
-        """
-        return_list = []
-        added_list = []
-        seen_list = []
+class Solution:
+  def invalidTransactions(self, transactions):
+    result = []
+    records = []
+
+    for t in transactions:
+        # split the record rec = [name, time, amt, city]
+        rec = t.split(',')
+        # convert to ints
+        rec[1] = int(rec[1])
+        rec[2] = int(rec[2])
+        # add to records list
+        records.append(rec)
+
+    for rec in records:
+        print("starting record: ", rec)
+        # amount > 1000$
+        if rec[2] > 1000:
+            rec[1] = str(rec[1])
+            rec[2] = str(rec[2])
+            # add to list
+            result.append(','.join(rec))
+            continue
         
-        for transaction in transactions: 
-            items = transaction.split(",")
+        # iterate all records to look for 2nd condition
+        for x in records:
+            # if name matches and time is in window and city doesn't match
+            # Making sure cities don't match avoids adding a record matching itself
+            if rec[0] == x[0] and abs(rec[1]-int(x[1])) <= 60 and rec[3] != x[3]:
+                rec[1] = str(rec[1])
+                rec[2] = str(rec[2])
+                # add to list
+                result.append(','.join(rec))
+                break
+
             
-            if int(items[2]) > 1000:
-                return_list.append(transaction)
-                
-                # add to seen list
-                # seen_list[name] = [name, time, amount, city]
-                seen_list.append( [items[0], items[1], items[2], items[3]] )
-                added_list.append(True)
-            else:
-                was_added = False
-                
-                for i in range(0, len(seen_list)): 
-                    # if name matches
-                    if items[0] == seen_list[i][0]:
-
-                        # if city does not match
-                        if seen_list[i][2] != items[3]:
-                            # if time matches window
-                            if int(seen_list[i][1]) <= (int(items[1]) + 60):
-                                if (int(seen_list[i][1]) >= (int(items[1]) - 60)):
-                                    # add current transaction
-                                    return_list.append(transaction)
-                                    
-                                    # add to seen list
-                                    # seen_list[name] = [name, time, amount, city]
-                                    seen_list.append( [items[0], items[1], items[2], items[3]] )
-                                    added_list.append(True)
-                                    was_added = True
-
-                                    # add colliding transaction
-                                    temp = ','.join(seen_list[i])
-                                    if added_list[i] == False:
-                                        return_list.append(temp)
-                                        added_list[i] = True
-                
-                if not was_added:
-                    # add to seen list
-                    # seen_list[name] = [name, time, amount, city]
-                    seen_list.append( [items[0], items[1], items[2], items[3]] )
-                    added_list.append(False)
-                    
-
-        return return_list
-                
+    return result
