@@ -5,12 +5,21 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-
-        for i in range(len(nums) - 1): 
-            lookingFor = target - nums[i]
-            for j in range(i+1, len(nums)):
-                if nums[j] == lookingFor:
-                    return [i,j]
-
-        # did not find
-        return []
+        indicies = {}
+        
+        for index in range(0, len(nums)):
+            indicies[index] = nums[index]
+            
+        
+        
+        for index in range(0, len(nums)): 
+            temp = target - nums[index]
+            
+            if temp in indicies.values():
+                key = indicies.keys()[indicies.values().index(temp)]
+                if key != index:
+                    return [index, key]
+        
+        print("not found")
+        return [-1, -1]
+        
