@@ -25,28 +25,43 @@ def flippingMatrix(matrix):
     rowArry = []
     for row in range(0, half):
         rowArry = matrix[row][:]
-        print("rowArray: ", rowArry)
-        if sum(rowArry[0:half]) > sum(rowArry[half:]):
-            matrix[row] = rowArry.reverse()
+        lSum = 0
+        rSum = 0
+        for index in range(0, len(rowArry)):
+            if index < half:
+                lSum += rowArry[index]
+            else:
+                rSum += rowArry[index]
+
+        if lSum > rSum:
+            rowArry.reverse()
+            matrix[row] = rowArry
     
-    colArry = []
+    
     for col in range(0, half):
-        colArry = matrix[:][col]
-        if sum(colArry[0:half]) > sum(colArry[half:]):
-            matrix[:][col] = colArry.reverse()
+        colArry = [row[col] for row in matrix]
+        print("colArray: ", colArry)
+        lSum = 0
+        rSum = 0
+        for index in range(0, len(colArry)):
+            if index < half:
+                lSum += colArry[index]
+            else:
+                rSum += colArry[index]
+
+        if lSum > rSum:
+            colArry.reverse()
+            matrix[:][col] = colArry
     
             
     currSum = calculateSum(matrix, 0, 0)
     maxSum = max(maxSum, currSum)
+    print("after :", matrix)
     return maxSum
-            
+
 def calculateSum(matrix, rowStart, colStart):
     currSum = 0
     quadrentLength = int(len(matrix)/2) -1
-    print("length: ", len(matrix))
-    print("Quadrent length: ", quadrentLength)
-    print("rowStart", rowStart)
-    print("colStart", colStart)
     for i in range(int(rowStart), int(rowStart+quadrentLength)):
         for j in range(int(colStart), int(colStart+quadrentLength)):
             currSum += matrix[i][j]
