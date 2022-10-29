@@ -15,58 +15,19 @@ import sys
 #
 
 def flippingMatrix(matrix):
-    # Write your code here
-    currSum = 0
-    half = int(len(matrix)/2)
-    
-    currSum = calculateSum(matrix, 0, 0)
-    maxSum = currSum
-    
-    rowArry = []
-    for row in range(0, half):
-        rowArry = matrix[row][:]
-        lSum = 0
-        rSum = 0
-        for index in range(0, len(rowArry)):
-            if index < half:
-                lSum += rowArry[index]
-            else:
-                rSum += rowArry[index]
+    # at each index in left upper quadrent each index can be one of four values
+    # find the max of those four values
+    t = len(matrix) - 1
+    n = len(matrix) // 2
+    max_sum = 0
+    for i in range(n):
+        for j in range(n):
+            # find max of the four possible values
+            max_value = max(matrix[i][j], \
+            matrix[i][t - j], matrix[t-i][j], matrix[t-i][t-j])
+            max_sum += max_value
+    return max_sum
 
-        if lSum > rSum:
-            rowArry.reverse()
-            matrix[row] = rowArry
-    
-    
-    for col in range(0, half):
-        colArry = [row[col] for row in matrix]
-        print("colArray: ", colArry)
-        lSum = 0
-        rSum = 0
-        for index in range(0, len(colArry)):
-            if index < half:
-                lSum += colArry[index]
-            else:
-                rSum += colArry[index]
-
-        if lSum > rSum:
-            colArry.reverse()
-            matrix[:][col] = colArry
-    
-            
-    currSum = calculateSum(matrix, 0, 0)
-    maxSum = max(maxSum, currSum)
-    print("after :", matrix)
-    return maxSum
-
-def calculateSum(matrix, rowStart, colStart):
-    currSum = 0
-    quadrentLength = int(len(matrix)/2) -1
-    for i in range(int(rowStart), int(rowStart+quadrentLength)):
-        for j in range(int(colStart), int(colStart+quadrentLength)):
-            currSum += matrix[i][j]
-    
-            return currSum
     
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
