@@ -15,19 +15,22 @@ import sys
 #
 
 def flippingMatrix(matrix):
-    # at each index in left upper quadrent each index can be one of four values
-    # find the max of those four values
+    # At each index in the left upper quadrent each index can be one of the four values, find the max of those four values
+    
     t = len(matrix) - 1
-    n = len(matrix) // 2
-    max_sum = 0
-    for i in range(n):
-        for j in range(n):
-            # find max of the four possible values
-            max_value = max(matrix[i][j], \
-            matrix[i][t - j], matrix[t-i][j], matrix[t-i][t-j])
-            max_sum += max_value
-    return max_sum
-
+    half = len(matrix) // 2
+    maxSum = 0
+    
+    for i in range(half):
+        for j in range(half):
+            # find max of the four values 
+            maxValue = max(matrix[i][j], matrix[i][t - j], \
+                matrix[t-i][j], matrix[t-i][t-j])
+            maxSum += maxValue
+    
+    return maxSum
+    
+    
     
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
